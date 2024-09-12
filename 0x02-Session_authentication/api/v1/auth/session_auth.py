@@ -45,4 +45,4 @@ class SessionAuth(Auth):
             return None
 
         #  Use .get to safely retrieve the user_id.
-        self.user_id_by_session_id.get(session_id)
+        return self.user_id_by_session_id.get(session_id)
