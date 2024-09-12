@@ -9,6 +9,9 @@ from typing import (
 )
 
 
+from os import getenv  # import getenv to get environment variable
+
+
 class Auth:
     """
     Manages the API authentication
@@ -56,3 +59,23 @@ class Auth:
         Returns a User instance from information from a request object
         """
         return None
+
+    def session_cookie(self, request=None):
+        """
+        Returns the value of the cookie named _my_session_id from the request.
+        The cookie name is defined by the environment variable SESSION_NAME.
+
+        Args:
+            request: The Flask request object
+
+        Returns:
+            The value of the session cookie if it exists, otherwise None.
+        """
+        if request is None:
+            return None
+
+        # Get the session cookie name from environment variable
+        session_name = getenv("SESSION_NAME", "_my_session_id")
+
+        # Return the value of the cookie from the request
+        return request.cookies.get(session_name)
