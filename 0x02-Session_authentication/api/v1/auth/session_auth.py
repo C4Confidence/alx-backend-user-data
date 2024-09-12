@@ -4,6 +4,7 @@ Definition of class SessionAuth
 """
 from api.v1.auth.auth import Auth
 import uuid
+import os
 
 
 class SessionAuth(Auth):
@@ -46,3 +47,26 @@ class SessionAuth(Auth):
 
         #  Use .get to safely retrieve the user_id.
         return self.user_id_by_session_id.get(session_id)
+
+    def session_cookie(self, request=None) -> str:
+        """
+        Returns the session ID from a coodkie named by SESSION_NAME
+        """
+        if request is None:
+            return None
+        cookie_name = os.getenv("SESSION_NAME", "_my_session_id")
+        return request.cookies.get(cookie_name)
+
+    def current_user(self, request=None) -> User:
+        """
+        Returns a User instance based on a session cookie
+        """
+        if request is None:
+            return None
+        session_id = self.session_cookie(request)
+        if session_id is None:
+            return None
+        user_id = self.user_id_for_session_id(session_id)
+        if user_id is None:
+            return None
+        return User.get(user_id)
