@@ -2,7 +2,7 @@
 """
 Definition of class SessionAuth
 """
-from api.v1.auth.auth import Auth
+from api.v1.auth.auth import Auth, User
 import uuid
 import os
 
@@ -54,8 +54,8 @@ class SessionAuth(Auth):
         """
         if request is None:
             return None
-        cookie_name = os.getenv("SESSION_NAME", "_my_session_id")
-        return request.cookies.get(cookie_name)
+        session_name = getenv('SESSION_NAME', '_my_session_id')
+        return request.cookies.get(session_name)
 
     def current_user(self, request=None) -> User:
         """

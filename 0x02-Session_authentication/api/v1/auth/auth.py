@@ -12,6 +12,13 @@ from typing import (
 from os import getenv  # import getenv to get environment variable
 
 
+class User:
+    @staticmethod
+    def get(user_id):
+        #  Logic to retrieve a User instance by user_id
+        pass
+
+
 class Auth:
     """
     Manages the API authentication
